@@ -430,7 +430,7 @@ for i in range(1,51):
 print("총 탑승 승객: {}분".format(count))
 '''
 
-
+'''
 #Function
 def open_accuont():
     print("새로운 계좌가 생성되었습니다.")
@@ -455,5 +455,199 @@ balance = deposit(balance, 1000)
 balance = withdraw(balance, 200)
 commision, balance = withdrawatnight(balance, 500)
 print("수수료 {}원이며, 잔액은 {}원입니다.".format(commision, balance))
+'''
 
+'''
+#Default Value(7-3)
+def profile(name, age, main_lang):
+    print("이름: {}\n나이 : {}\n주 사용 언어: {}"\
+        .format(name, age, main_lang))
 
+profile('a',20,'Python')
+profile('b',25,'Java')
+
+def profile(name, age = 17, main_lang='Python'):
+    print("이름: {}\n나이 : {}\n주 사용 언어: {}"\
+        .format(name, age, main_lang))
+
+profile('a')
+profile('b')
+
+#Function using Keyword(7-4)
+def profile(name, age, main_lang):
+    print(name, age, main_lang)
+
+profile(name = 'a', main_lang='Python', age = '20')
+
+#가변 인자 Function
+def profile(name, age, lang1, lang2, lang3, lang4):
+    print(f"Name: {name}, Age: {age}", end=" ")
+    print(lang1, lang2, lang3, lang4)
+
+profile('YB',20,"Python","Java","C++","R")
+profile('AB',25,"Kotlin","Swift",'','')
+
+def profile(name, age, *language):  #*은 가변인자
+    print(f"Name: {name}, Age: {age}", end=" ")
+    for lang in language:
+        print(lang, end = " ")
+    print()
+
+profile('YB',20,"Python","Java","C++","R")
+profile('AB',25,"Kotlin","Swift")
+'''
+
+'''
+#Local Variable & Global Variable(7-6)
+gun = 10
+# def checkpoint(soldiers):
+#     global gun
+#     gun = gun - soldiers
+#     print("[함수 내] 남은 총: {}".format(gun))
+
+# print("전체 총: {}".format(gun))
+# checkpoint(2)
+# print("남은 총: {}".format(gun))
+
+def checkpoint_ret(gun, soldiers):
+    gun = gun - soldiers
+    print("[함수 내] 남은 총: {}".format(gun))
+    return gun
+
+print("전체 총: {}".format(gun))
+gun = checkpoint_ret(gun, 2)
+print("남은 총: {}".format(gun))
+'''
+
+'''
+#Quiz6
+def std_weight(height, gender):
+    if gender == 'male':
+        std = round((height/100)**2*22,2)
+        print("키 {}cm 남자의 표준 체중은 {}kg입니다."\
+        .format(height, std))
+        return std
+    elif gender == 'female':
+        std = round((height/100)**2*21,2)
+        print("키 {}cm 여자의 표준 체중은 {}kg입니다."\
+        .format(height, std))
+        return std
+std_weight(166,'female')
+'''
+
+'''
+#표준 출력(8-1)
+print('a','b', sep = " vs ")
+print('a','b', sep = " vs ", end="?\n")
+print('무엇')
+
+import sys
+print("a","b",file=sys.stdout)
+print("a","b",file=sys.stderr)
+
+scores = {"Math":0, "English":50, "Computer":100}
+for subject, score in scores.items():
+    # print(subject, score)
+    print(subject.ljust(8), str(score).rjust(4))
+
+for num in range(1,21):
+    print("대기번호: "+ str(num).zfill(3))
+
+#표준 입력(8-1)
+answer = input("아무 값이나 입력하세요: ")
+print("입력하신 값은", answer, "입니다.")
+'''
+
+'''
+#출력 포맷(8-2)
+#빈 자리는 빈공간, 오른쪽 정렬, 10자리 공간 확보
+print("{0: >10}".format(500))
+#양수일 땐 +, 음수일 땐 - 로 표시
+print("{0: >+10}".format(500))
+print("{0: >+10}".format(-500))
+#왼쪽 정렬, 빈칸 -로 채움
+print("{0:-<+10}".format(-500))
+#3자리 마다 , 찍기
+print("{0:,}".format(10000000000000000))
+#3자리 마다 , 찍기/ 부호 붙이기
+print("{0:+,}".format(10000000000000000))
+print("{0:+,}".format(-10000000000000000))
+
+print("{0:^<+30,}".format(10000000000000))
+#소수점 출력
+print("{0}".format(5/3))
+print("{0:f}".format(5/3))
+print("{0:.2f}".format(5/3))
+'''
+
+'''
+#파일 입출력(8-3)
+# score_file = open("score.txt", "w", encoding="utf8")
+# print("수학 : 0", file=score_file)
+# print("영어 : 0", file=score_file)
+# score_file.close()
+
+# score_file = open("score.txt", "a", encoding='utf8')
+# score_file.write("과학 : 80\n")
+# score_file.write("코딩 : 100")
+# score_file.close()
+
+score_file = open("score.txt", "r", encoding='utf8')
+print(score_file.read())
+score_file.close()
+
+score_file = open("score.txt", "r", encoding='utf8')
+print(score_file.readline())
+print(score_file.readline())
+print(score_file.readline())
+print(score_file.readline())
+score_file.close()
+
+score_file = open("score.txt", "r", encoding='utf8')
+while True:
+    line = score_file.readline()
+    if not line:
+        break
+    print(line)
+score_file.close()
+
+score_file = open("score.txt", "r", encoding='utf8')
+lines = score_file.readlines()
+for line in lines:
+    print(line)
+score_file.close()
+'''
+
+'''
+#Pickle(8-4)
+import pickle
+# profile_file = open("profile.pickle", "wb")
+# profile = {"이름": "박명수", "나이": 30, "취미": ["축구","골프"]}
+# print(profile)
+# pickle.dump(profile, profile_file)
+# profile_file.close()
+
+profile_file = open("profile.pickle", "rb")
+profile = pickle.load(profile_file)
+print(profile)
+profile_file.close()
+'''
+
+'''
+#With(8-5)
+import pickle
+with open("profile.pickle", "rb") as profile_file:
+    print(pickle.load(profile_file))
+
+with open("study.txt", "w", encoding="utf8") as study_file:
+    study_file.write("파이썬 재미없어ㅓ")
+
+with open("study.txt", "r", encoding="utf8") as study_file:
+    print(study_file.read())
+'''
+
+#Quiz7
+for i in range(1,5):
+    with open(f"{i}주차.txt","w",encoding="utf8") as report:
+        report.write(f"- {i} 주차 주간보고 - \
+            \n부서:\n이름:\n업무 요약:\n")
