@@ -367,6 +367,7 @@ for waiting_no in range(1,6): #1,2,3,4,5
     print("Waiting : {}".format(waiting_no))
 '''
 
+'''
 #while
 customer = "Thor"
 index = 5
@@ -388,12 +389,71 @@ while person != customer:
     print("{}, your coffee is ready!".format(customer))
     person = input("What's your name?")
 
-#second commit
+#Continue, Break
+absent = [2,5]
+nobook = [7]
+for student in range(1,11):
+    if student in absent:
+        continue
+    if student in nobook:
+        print("Class is over. Come to my office, {}.")
+        break
+    print("{}, Read page 3".format(student))
+'''
+
+'''
+#For문 in one line
+students = [1,2,3,4,5]
+print(students)
+students = [i+100 for i in students]
+print(students)
+
+students = ["Ironman","Thor","Groot"]
+students = [len(i) for i in students]
+print(students)
+
+students = ["Ironman","Thor","Groot"]
+students = [i.upper() for i in students]
+print(students)
+
+#Quiz 5
+import random
+passenger = {}
+count = 0
+for i in range(1,51):
+    passenger[i] = random.randint(5,51)
+    if 5 < passenger[i] < 15:
+        print(f"[O] {i}번째 손님 (소요시간 : {passenger[i]}분)")
+        count += 1
+    else:
+        print(f"[ ] {i}번째 손님 (소요시간 : {passenger[i]}분)")
+print("총 탑승 승객: {}분".format(count))
+'''
 
 
+#Function
+def open_accuont():
+    print("새로운 계좌가 생성되었습니다.")
+open_accuont()
 
+def deposit(balance, money):
+    print(f"입금이 완료되었습니다. 잔액은 {balance+money} 원입니다.")
+    return balance+money
 
+def withdraw(balance, money):
+    if balance >= money:
+        print(f"출금이 완료되었습니다. 잔액은 {balance-money} 원입니다.")
+        return balance - money
+    else:
+        print(f"잔액이 부족합니다. 잔액은 {balance}원입니다.")
 
-
+def withdrawatnight(balance, money):
+    commision = 100
+    return commision, balance - money - commision
+balance = 0
+balance = deposit(balance, 1000)
+balance = withdraw(balance, 200)
+commision, balance = withdrawatnight(balance, 500)
+print("수수료 {}원이며, 잔액은 {}원입니다.".format(commision, balance))
 
 
