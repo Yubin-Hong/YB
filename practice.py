@@ -632,7 +632,6 @@ profile = pickle.load(profile_file)
 print(profile)
 profile_file.close()
 '''
-
 '''
 #With(8-5)
 import pickle
@@ -645,9 +644,202 @@ with open("study.txt", "w", encoding="utf8") as study_file:
 with open("study.txt", "r", encoding="utf8") as study_file:
     print(study_file.read())
 '''
-
+'''
 #Quiz7
 for i in range(1,5):
     with open(f"{i}주차.txt","w",encoding="utf8") as report:
         report.write(f"- {i} 주차 주간보고 - \
             \n부서:\n이름:\n업무 요약:\n")
+'''
+'''
+#Class(9-1)
+name = "Marine"
+hp = 40
+damage = 5
+print("{} 유닛이 생성되었습니다.".format(name))
+print("체력 {},  공격력 {}\n".format(hp, damage))
+
+tank_name = "Tank"
+tank_hp = 150
+tank_damage = 35
+print("{} 유닛이 생성되었습니다.".format(tank_name))
+print("체력 {},  공격력 {}\n".format(tank_hp, tank_damage))
+
+def attack(name, location, damage):
+    print("{} : {} 방향으로 공격. [공격력 {}]".\
+        format(name, location, damage))
+attack(name, "1시", damage)
+attack(tank_name, "1시", tank_damage)
+'''
+'''
+#__init__(9-2)
+class Unit:
+    def __init__(self, name, hp, damage):
+        self.name = name
+        self.hp = hp
+        self.damage = damage
+        print("{} 유닛이 생성되었습니다.".format(self.name))
+        print("체력 {},  공격력 {}\n".format(self.hp, self.damage))
+
+marine1 = Unit("Marine", 40, 5)
+marine2 = Unit("Marine", 40, 5)
+tank = Unit("Tank", 150, 35)
+'''
+'''
+#member variable(9-3)
+wraith1 = Unit("Wraith", 80, 5)
+print("유닛 이름: {}, 공격력: {}".\
+    format(wraith1.name, wraith1.damage))
+
+wraith2 = Unit("빼앗은 레이스", 80, 5)
+wraith2.clocking = True
+
+if wraith2.clocking == True:
+    print("{}은 현재 클로킹 상태입니다.".format(wraith2.name))
+'''
+'''
+#Method(9-4)
+class AttackUnit:
+    def __init__(self, name, hp, damage):
+        self.name = name
+        self.hp = hp
+        self.damage = damage
+
+    def attack(self, location):
+        print("{}: {} 방향으로 적군을 공격합니다. [공격력 {}]".\
+            format(self.name, location, self.damage))
+    
+    def damaged(self, damage):
+        print("{}: {} 데미지를 입었습니다.".format(self.name, damage))
+        self.hp -= damage
+        print(f"{self.name}: 현재 체력은 {self.hp}입니다.")
+        if self.hp <= 0:
+            print(f"{self.name}: 파괴되었습니다.")
+
+firebat1 = AttackUnit("Firebat", 50, 16)
+firebat1.attack("5시")
+firebat1.damaged(25)
+firebat1.damaged(25)
+'''
+'''
+#상속(9-5)
+class Unit:
+    def __init__(self, name, hp):
+        self.name = name
+        self.hp = hp
+        print("{} 유닛이 생성되었습니다.".format(self.name))
+        print("체력: {}\n".format(self.hp))
+
+class AttackUnit(Unit): #상속
+    def __init__(self, name, hp, damage):
+        Unit.__init__(self, name, hp)
+        self.damage = damage
+
+    def attack(self, location):
+        print("{}: {} 방향으로 적군을 공격합니다. [공격력 {}]".\
+            format(self.name, location, self.damage))
+    
+    def damaged(self, damage):
+        print("{}: {} 데미지를 입었습니다.".format(self.name, damage))
+        self.hp -= damage
+        print(f"{self.name}: 현재 체력은 {self.hp}입니다.")
+        if self.hp <= 0:
+            print(f"{self.name}: 파괴되었습니다.")
+
+#다중 상속(9-6)
+class Flyable:
+    def __init__(self, flying_speed):
+        self.flying_speed = flying_speed
+    def fly(self, name, location):
+        print(f"{name}: {location} 방향으로 날아갑니다. [속도: {self.flying_speed}]")
+
+class FlyableAttackUnit(AttackUnit, Flyable):   #다중상속
+    def __init__(self, name, hp, damage, flying_speed):
+        AttackUnit.__init__(self, name, hp, damage)
+        Flyable.__init__(self, flying_speed)
+valkyire = FlyableAttackUnit("Valkyrie", 200, 6, 5)
+valkyire.fly(valkyire.name, "3시")
+'''
+
+#Method Overriding(9-7)
+class Unit:
+    def __init__(self, name, hp, speed):
+        self.name = name
+        self.hp = hp
+        self.speed = speed
+        print("{} 유닛이 생성되었습니다.".format(name))
+        print("체력: {}\n".format(self.hp))
+    def move(self, location):
+        print("[지상 유닛 이동]")
+        print(f"{self.name}: {location} 방향으로 이동합니다. [속도: {self.speed}]")
+        
+class AttackUnit(Unit):
+    def __init__(self, name, hp, speed, damage):
+        Unit.__init__(self, name, hp, speed)
+        self.damage = damage
+    def attack(self, location):
+        print("{}: {} 방향으로 적군을 공격합니다. [공격력 {}]".\
+            format(self.name, location, self.damage))
+    def damaged(self, damage):
+        print("{}: {} 데미지를 입었습니다.".format(self.name, damage))
+        self.hp -= damage
+        print(f"{self.name}: 현재 체력은 {self.hp}입니다.")
+        if self.hp <= 0:
+            print(f"{self.name}: 파괴되었습니다.")
+
+class Flyable:
+    def __init__(self, flying_speed):
+        self.flying_speed = flying_speed
+    def fly(self, name, location):
+        print(f"{name}: {location} 방향으로 날아갑니다. [속도: {self.flying_speed}]")
+
+class FlyableAttackUnit(AttackUnit, Flyable):   #다중상속
+    def __init__(self, name, hp, damage, flying_speed):
+        AttackUnit.__init__(self, name, hp, 0, damage)
+        Flyable.__init__(self, flying_speed)
+    def move(self, location):
+        print("[공중 유닛 이동]")
+        self.fly(self.name, location)
+
+vulture = AttackUnit("Vulture", 80, 10, 20)
+battlecrusier = FlyableAttackUnit("Battlecrusied", 500, 25, 3)
+vulture.move("11시")
+battlecrusier.move("9시")
+
+#Pass(9-8)
+class BuildingUnit(Unit):
+    def __init__(self, name, hp, location):
+        pass
+
+supply_depot = BuildingUnit("Supply Depot", 500, "7시")
+
+def game_start():
+    print("게임을 시작합니다.")
+def game_over():
+    pass
+game_start()
+game_over()
+
+#Super(9-9)
+class BuildingUnit(Unit):
+    def __init__(self, name, hp, location):
+        #Unit.__init__(self, name, hp, 0)
+        super().__init__(name, hp, 0)
+        self.location = location
+#Super는 다중상속에서 오류 발생
+class Unit:
+    def __init__(self):
+        print("Unit 생성자")
+
+class Flyable:
+    def __init__(self):
+        print("Flyable 생성자")
+
+class FlyableUnit(Unit, Flyable):
+    def __init__(self):
+        super().__init__()
+
+dropship = FlyableUnit()
+#다중 상속은 직접 상속시켜야함
+
+#Starcraft
